@@ -2,13 +2,13 @@
 Carnegie Mellon University Mobot Racing 2016
 
 ## Installation Instructions
-1. Get Anaconda2
-2. run
+Get Anaconda2
+Install opencv3 for python2
 ```shell
 conda install opencv
 ```
-3. run
+Install rpyc for remote object sharing
 ```shell
 pip install rpyc
 ```
-4. You are good to go.
+You are good to go.
