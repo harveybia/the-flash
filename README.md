@@ -8,10 +8,10 @@ The core algorithms are currently closed source and under active research and
 development.
 
 ## Team Members
-Harvey Shi
-Matthew Zhao
-Elias Lu
-Steven
+Harvey Shi,
+Matthew Zhao,
+Elias Lu,
+Steven,
 
 ## Installation Instructions
 Make sure you have the correct paths in your environment.
@@ -31,7 +31,8 @@ You can check this by running python in terminal and see if anaconda is running.
 
 You should see this:
 
-Python 2.7.11 |Anaconda 2.4.1 (x86_64)|
+> Python 2.7.11 |Anaconda 2.4.1 (x86_64)|
+
 ```sh
 $ pip install rpyc
 ```
