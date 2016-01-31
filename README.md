@@ -43,11 +43,6 @@ For Mac Users:
 $ sudo -H pip install Pillow
 ```
 
-Clone repo to your computer
-```sh
-$ git clone https://github.com/harveybia/the-flash.git
-```
-
 For Windows Users:
 
 You need to install image library for PIL.
@@ -57,6 +52,10 @@ $ pip uninstall Pillow
 $ pip install image
 ```
 
+### Clone repo to your computer
+```sh
+$ git clone https://github.com/harveybia/the-flash.git
+```
 You are good to go.
 
 [Anaconda2]: <https://www.continuum.io/downloads>
