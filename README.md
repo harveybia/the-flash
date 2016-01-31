@@ -11,7 +11,7 @@ development.
 Harvey Shi,
 Matthew Zhao,
 Elias Lu,
-Steven,
+Steven Yang
 
 ## Installation Instructions
 Make sure you have the correct paths in your environment.
