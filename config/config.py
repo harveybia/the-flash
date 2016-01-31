@@ -1,9 +1,7 @@
 import cv2
 import time
 import Tkinter as tk
-import numpy as np
-import threading
-from matplotlib import pyplot as plt
+from PIL import Image, ImageTk
 
 def profile(fn):
     # A decorator function to determine the run time of functions
@@ -16,48 +14,52 @@ def profile(fn):
         return ret
     return with_profiling
 
-img = cv2.imread('../tests/1.JPG',0)
-WIDTH, HEIGHT = img.shape
-img = cv2.resize(img, dsize=(WIDTH//16, HEIGHT//16))
-blurred = cv2.medianBlur(img, 5)
-#blurred = cv2.GaussianBlur(img, (5,5), 0)
+ex_img = cv2.imread('../tests/1.JPG',0)
+
+WIDTH, HEIGHT = ex_img.shape
+ex_img = cv2.resize(ex_img, dsize=(WIDTH//16, HEIGHT//16))
+blurred = cv2.medianBlur(ex_img, 5)
+#blurred = cv2.GaussianBlur(ex_img, (5,5), 0)
 edges = cv2.Canny(blurred,0,500)
 
+def grayToRGB(img):
+    # Converts grayscale image into RGB
+    # This conversion uses numpy array operation and takes less time
+    return cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
+
+    # By accessing pixel arrays:
+    # splited = cv2.split(image)
+    # B = splited[:,0]
+    # G = splited[:,1]
+    # R = splited[:,2]
+    # Merged = cv2.merge((R, G, B))
+
+def grayToTkImage(img):
+    # Convert the Image object into a TkPhoto object
+    im = Image.fromarray(grayToRGB(img))
+    return ImageTk.PhotoImage(image=im)
+
 @profile
-def updatePlot(scale1, scale2, scale3):
-    plt.clf()
+def findEdges(img, blur_factor, edge_low, edge_high):
+    blurred = cv2.medianBlur(img, blur_factor//2*2+1)
+    edges = cv2.Canny(blurred, edge_low, edge_high)
+    return edges
 
-    plt.subplot(131),plt.imshow(img,cmap = 'gray')
-    plt.title('Original Image'), plt.xticks([]), plt.yticks([])
+@profile
+def determinePolynominals(img):
+    # CORE, Closed source code
+    # To be Implemented
+    return img
 
-    blurred = cv2.medianBlur(img, scale3.get()//2*2+1)
-    #blurred = cv2.GaussianBlur(img, (5,5), 0)
-    #blurred = img
-    plt.subplot(132),plt.imshow(blurred,cmap = 'gray')
-    plt.title('Blurred Image'), plt.xticks([]), plt.yticks([])
-
-    edges = cv2.Canny(blurred,scale1.get(),scale2.get())
-    plt.subplot(133),plt.imshow(edges,cmap = 'gray')
-    plt.title('Edge Image'), plt.xticks([]), plt.yticks([])
-
-    fig.canvas.draw()
-
+# Create a Tkinter root
 root = tk.Tk()
-root.geometry("500x250+10+10")
-scale1 = tk.Scale(root, orient=tk.HORIZONTAL, from_=0, to=500)
-scale2 = tk.Scale(root, orient=tk.HORIZONTAL, from_=0, to=500)
-scale3 = tk.Scale(root, orient=tk.HORIZONTAL, from_=0, to=50)
-scale1.bind("<ButtonRelease-1>", lambda x: updatePlot(scale1, scale2, scale3))
-scale2.bind("<ButtonRelease-1>", lambda x: updatePlot(scale1, scale2, scale3))
-scale3.bind("<ButtonRelease-1>", lambda x: updatePlot(scale1, scale2, scale3))
-scale1.pack()
-scale2.pack()
-scale3.pack()
-fig = plt.figure()
+root.geometry("500x500+10+10")
 
-Thd = threading.Thread(target=tk.mainloop)
-Thd.start()
+# Temporary Display Code
+processed_img = findEdges(ex_img, 5, 55, 200)
+tk_img = grayToTkImage(processed_img)
+imageLabel = tk.Label(root, image = tk_img, height=500, width=500)
+imageLabel.image = tk_img
+imageLabel.pack()
 
-updatePlot(scale1, scale2, scale3)
-
-plt.show()
+tk.mainloop()
