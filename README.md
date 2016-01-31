@@ -12,7 +12,7 @@ Harvey Shi,
 Matthew Zhao,
 Elias Lu,
 Steven Yang,
-Stefan Zhu
+Stefen Zhu
 
 ## Installation Instructions
 Make sure you have the correct paths in your environment.
