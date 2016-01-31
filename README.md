@@ -37,6 +37,8 @@ $ pip install rpyc
 ```
 
 ### Install PIL (Python Imaging Library)
+For Mac Users:
+
 ```sh
 $ sudo -H pip install Pillow
 ```
@@ -44,6 +46,15 @@ $ sudo -H pip install Pillow
 Clone repo to your computer
 ```sh
 $ git clone https://github.com/harveybia/the-flash.git
+```
+
+For Windows Users:
+
+You need to install image library for PIL.
+Do this in Administrator Command Prompt:
+```sh
+$ pip uninstall Pillow
+$ pip install image
 ```
 
 You are good to go.
