@@ -3,6 +3,8 @@ import time
 import Tkinter as tk
 from PIL import Image, ImageTk
 
+import UI_Mobot_Configuration as ui
+
 def profile(fn):
     # A decorator function to determine the run time of functions
     def with_profiling(*args, **kwargs):
@@ -50,6 +52,28 @@ def determinePolynominals(img):
     # CORE, Closed source code
     # To be Implemented
     return img
+
+class ConfigurationMainFrame():
+    def __init__(self):
+        #self.ReceiveDiagnoseBool = tk.StringVar()
+
+        ui.UI_Mobot_Configuration_support.connectAction = \
+            self.connectAction
+        ui.UI_Mobot_Configuration_support.pingAction = \
+            self.pingAction
+
+        #ui.UI_Mobot_Configuration_support.ReceiveDiagnoseBool = \
+        #    self.ReceiveDiagnoseBool
+
+    def connectAction(self):
+        print "Connect Action"
+
+    def pingAction(self):
+        print "Ping Action"
+
+if __name__ == "__main__":
+    MainFrame = ConfigurationMainFrame()
+    ui.vp_start_gui()
 
 # Create a Tkinter root
 root = tk.Tk()
