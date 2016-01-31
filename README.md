@@ -1,8 +1,19 @@
 # the-flash
 Carnegie Mellon University Mobot Racing 2016
 
-## Installation Instructions
+This repo only contains framework codes, interfaces between Mobot itself
+and the computer, raw data processing and other utilities.
 
+The core algorithms are currently closed source and under active research and
+development.
+
+## Team Members
+Harvey Shi
+Matthew Zhao
+Elias Lu
+Steven
+
+## Installation Instructions
 Make sure you have the correct paths in your environment.
 For example, sometimes you have pip2 directing to a python2
 pip and use python2 instead of python.
