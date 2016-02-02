@@ -53,6 +53,30 @@ def determinePolynominals(img):
     # To be Implemented
     return img
 
+class VectorEquation():
+    # This class defines a vector equation with arc lenth parameterization
+    # methods: VectorEquation.getDerivativeAt(s=0) -> Vector quantity
+    pass
+
+def getMobotStatus():
+    # Use rpyc to get state of mobot
+    # -------STRUCT------
+    # SPEED: (Int, Int), BATT: Int,
+    # INTEGRITY: Int, CAMERA_ENABLED: Bool,
+    # FPS: Int, CPU: Int, CAMERA_MOUNT_ANGLE: Int
+    # CAMERA_X_OFFSET: Int, CAMERA_Y_OFFSET: Int
+    # -------------------- more to come.
+    pass
+
+@profile
+def calculateDesiredVelocityVector():
+    # Takes in a equation (set) and calculate desired velocity vector
+    pass
+
+def convertVelocityVectorToSpeeds():
+    # This function converts a velocity vector into L/R speed tuple
+    pass
+
 class ConfigurationMainFrame():
     def __init__(self):
         #self.ReceiveDiagnoseBool = tk.StringVar()
