@@ -43,7 +43,7 @@ def grayToTkImage(img):
 
 @profile
 def findEdges(img, blur_factor, edge_low, edge_high):
-    blurred = cv2.medianBlur(img, blur_factor//2*2+1)
+    blurred = cv2.medianBlur(img, int(blur_factor//2*2+1))
     edges = cv2.Canny(blurred, edge_low, edge_high)
     return edges
 
@@ -61,29 +61,42 @@ class ConfigurationMainFrame():
             self.connectAction
         ui.UI_Mobot_Configuration_support.pingAction = \
             self.pingAction
+        ui.UI_Mobot_Configuration_support.settingsChanged = \
+            self.settingsChanged
+        ui.UI_Mobot_Configuration_support.emergencyStopAction = \
+            self.emergencyStopAction
 
         #ui.UI_Mobot_Configuration_support.ReceiveDiagnoseBool = \
         #    self.ReceiveDiagnoseBool
 
+    # UI Methods
     def connectAction(self):
         print "Connect Action"
 
     def pingAction(self):
         print "Ping Action"
 
+    def settingsChanged(self, e):
+        print "Settings Changed"
+        self.updateDashboardImages()
+
+    def emergencyStopAction(self):
+        print "Emergency Stop"
+
+    # Framework Methods
+    def updateDashboardImages(self):
+        BLUR_FACTOR = ui.w.BlurScale.get()
+        CANNY_LO = ui.w.CannyLoScale.get()
+        CANNY_HI = ui.w.CannyHiScale.get()
+        originalImage = ex_img
+        processedImage = findEdges(ex_img, BLUR_FACTOR, CANNY_LO, CANNY_HI)
+        originalImage = grayToTkImage(originalImage)
+        processedImage = grayToTkImage(processedImage)
+        ui.w.OriginalImageLabel.configure(image = originalImage)
+        ui.w.OriginalImageLabel.image = originalImage
+        ui.w.ProcessedImageLabel.configure(image = processedImage)
+        ui.w.ProcessedImageLabel.image = processedImage
+
 if __name__ == "__main__":
     MainFrame = ConfigurationMainFrame()
     ui.vp_start_gui()
-
-# Create a Tkinter root
-root = tk.Tk()
-root.geometry("500x500+10+10")
-
-# Temporary Display Code
-processed_img = findEdges(ex_img, 5, 55, 200)
-tk_img = grayToTkImage(processed_img)
-imageLabel = tk.Label(root, image = tk_img, height=500, width=500)
-imageLabel.image = tk_img
-imageLabel.pack()
-
-tk.mainloop()
