@@ -122,7 +122,7 @@ class ConfigurationMainFrame():
     # Framework Methods
     @profile
     def updateDashboardImages(self):
-        if self.conn == None: return
+        #if self.conn == None: return
         BLUR_FACTOR = ui.w.BlurScale.get()
         CANNY_LO = ui.w.CannyLoScale.get()
         CANNY_HI = ui.w.CannyHiScale.get()
@@ -130,6 +130,8 @@ class ConfigurationMainFrame():
         print type(originalImage)
         processedImage = findEdges(originalImage,
             BLUR_FACTOR, CANNY_LO, CANNY_HI)
+        print type(processedImage)
+        print processedImage
         originalImage = grayToTkImage(originalImage)
         processedImage = grayToTkImage(processedImage)
         ui.w.OriginalImageLabel.configure(image = originalImage)
