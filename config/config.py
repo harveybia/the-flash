@@ -1,6 +1,9 @@
 import cv2
 import time
+import rpyc
+import logging
 import Tkinter as tk
+import numpy as np
 from PIL import Image, ImageTk
 
 import UI_Mobot_Configuration as ui
@@ -92,10 +95,19 @@ class ConfigurationMainFrame():
 
         #ui.UI_Mobot_Configuration_support.ReceiveDiagnoseBool = \
         #    self.ReceiveDiagnoseBool
+        self.conn = None
 
     # UI Methods
     def connectAction(self):
         print "Connect Action"
+        HOSTNAME = ui.w.IPEntry.get()
+        PORT = int(ui.w.PortEntry.get())
+        logging.info("Connecting to client: %s@PORT%d"%(HOSTNAME, PORT))
+        try:
+            self.conn = rpyc.connect(HOSTNAME, PORT)
+        except:
+            logging.warn("No valid services found.")
+        self.updateMobotInfo()
 
     def pingAction(self):
         print "Ping Action"
@@ -108,18 +120,28 @@ class ConfigurationMainFrame():
         print "Emergency Stop"
 
     # Framework Methods
+    @profile
     def updateDashboardImages(self):
+        if self.conn == None: return
         BLUR_FACTOR = ui.w.BlurScale.get()
         CANNY_LO = ui.w.CannyLoScale.get()
         CANNY_HI = ui.w.CannyHiScale.get()
         originalImage = ex_img
-        processedImage = findEdges(ex_img, BLUR_FACTOR, CANNY_LO, CANNY_HI)
+        print type(originalImage)
+        processedImage = findEdges(originalImage,
+            BLUR_FACTOR, CANNY_LO, CANNY_HI)
         originalImage = grayToTkImage(originalImage)
         processedImage = grayToTkImage(processedImage)
         ui.w.OriginalImageLabel.configure(image = originalImage)
         ui.w.OriginalImageLabel.image = originalImage
         ui.w.ProcessedImageLabel.configure(image = processedImage)
         ui.w.ProcessedImageLabel.image = processedImage
+
+    def updateMobotInfo(self):
+        if self.conn == None: return
+        batt = self.conn.root.getBattery()
+        ui.w.TProgressbar1.step(amount=abs(batt-1))
+        ui.w.Label9.config(text=str(batt))
 
 if __name__ == "__main__":
     MainFrame = ConfigurationMainFrame()
