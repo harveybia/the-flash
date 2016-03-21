@@ -11,9 +11,7 @@ development.
 ## Team Members
 Harvey Shi,
 Matthew Zhao,
-Elias Lu,
-Steven Yang,
-Stefen Zhu
+Elias Lu
 
 ## Installation Instructions
 Make sure you have the correct paths in your environment.
